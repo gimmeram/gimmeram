@@ -16,10 +16,6 @@
 
 # kill the devourer_of_memory process
 execute_command="killall devourer_of_memory"
-
-# kill the top memory consuming process (you need to uncomment to use it)
-#execute_command="kill -9 $(ps -eo pid --sort=-%mem  | head -2 | tail -1)"
-
 command_name="The Devourer of Memory is closed."
 
 first_warning_level=500 #MB free memory
@@ -37,6 +33,7 @@ do
     free_ram_previous=$free_ram
     free_ram=$(($free_ram_in_bytes/1024))
     if [ $free_ram -lt $execution_level ]; then
+        #execute_command="kill -9 $(ps -eo pid --sort=-%mem  | head -2 | tail -1)" # kill the top memory consuming process (you need to uncomment to use it)
         $execute_command
         notify-send -t 15000 -i ERROR "GIMME RAM!" "There was no free RAM! \n\n$command_name"
     fi
